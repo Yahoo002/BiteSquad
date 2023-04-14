@@ -1,4 +1,4 @@
-const { Model, DataTypes, Sequelize } = require("sequelize");
+const { Model, DataTypes, sequelize } = require("sequelize");
 const sequelize = require("../config/dbConfig");
 
 class Restaurant extends Model {}
@@ -48,5 +48,6 @@ const Restaurant = sequelize.define(
     tableName: "restaurants",
   }
 );
+x;
 
 module.exports = Restaurant;

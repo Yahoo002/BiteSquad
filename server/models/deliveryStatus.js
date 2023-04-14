@@ -1,11 +1,12 @@
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../config.json");
+const { sequelize, DataTypes, Models } = require("sequelize");
+const sequelize = require("../db.config");
 
 class DeliveryDetail extends Model {}
 
-DeliveryDetail.init(
+const deliveryStatus = sequelize.define(
+  "deliveryStatus",
   {
-    id: {
+    statusId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -13,10 +14,18 @@ DeliveryDetail.init(
     orderId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: "order",
+        key: "orderId",
+      },
     },
     deliveryPartnerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: "deliveryPartner",
+        key: "deliveryPartnerId",
+      },
     },
     deliveryAddress: {
       type: DataTypes.STRING,

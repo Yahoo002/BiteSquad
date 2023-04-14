@@ -4,7 +4,7 @@ const { Order, OrderItem } = require("../models");
 const authMiddleware = require("../middlewares/auth");
 
 // Create a new order
-router.post("/", authMiddleware, async (req, res) => {
+router.post("/order/create", authMiddleware, async (req, res) => {
   try {
     const { orderItems } = req.body;
     const order = await Order.create({

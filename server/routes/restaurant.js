@@ -4,7 +4,7 @@ const { Restaurant, Menu, User } = require("../models");
 const { verifyToken, verifyRestaurantAdmin } = require("../middleware/auth");
 
 // Get all restaurants
-router.get("/", async (req, res) => {
+router.get("/restaurant", async (req, res) => {
   try {
     const restaurants = await Restaurant.findAll({
       include: [{ model: Menu }],
@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get restaurant by ID
-router.get("/:id", async (req, res) => {
+router.get("/restaurant:id", async (req, res) => {
   const { id } = req.params;
   try {
     const restaurant = await Restaurant.findByPk(id, {
@@ -35,29 +35,34 @@ router.get("/:id", async (req, res) => {
 });
 
 // Create restaurant
-router.post("/", verifyToken, verifyRestaurantAdmin, async (req, res) => {
-  const { name, address, phone, email, description, image } = req.body;
-  const userId = req.user.id;
-  try {
-    const user = await User.findByPk(userId);
-    if (!user) {
-      return res.status(401).json({ message: "User not authorized" });
+router.post(
+  "/restraunt/create",
+  verifyToken,
+  verifyRestaurantAdmin,
+  async (req, res) => {
+    const { name, address, phone, email, description, image } = req.body;
+    const userId = req.user.id;
+    try {
+      const user = await User.findByPk(userId);
+      if (!user) {
+        return res.status(401).json({ message: "User not authorized" });
+      }
+      const restaurant = await Restaurant.create({
+        name,
+        address,
+        phone,
+        email,
+        description,
+        image,
+        userId,
+      });
+      res.json(restaurant);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Server Error" });
     }
-    const restaurant = await Restaurant.create({
-      name,
-      address,
-      phone,
-      email,
-      description,
-      image,
-      userId,
-    });
-    res.json(restaurant);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server Error" });
   }
-});
+);
 
 // Update restaurant
 router.put("/:id", verifyToken, verifyRestaurantAdmin, async (req, res) => {

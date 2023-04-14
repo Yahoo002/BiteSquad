@@ -3,7 +3,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const { sequelize } = require("./models");
+const sequelize = require("sequelize");
+// const { sequelize } = require("./models");
 const dotenv = require("dotenv");
 dotenv.config();
 

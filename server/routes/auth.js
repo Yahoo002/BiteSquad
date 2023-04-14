@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { body, validationResult } = require("express-validator");
 
-const { User } = require("../models");
+const { User: user } = require("../models");
 
 // Register a new user
 router.post(
@@ -22,7 +22,7 @@ router.post(
 
     const { email, password } = req.body;
     try {
-      const user = await User.findOne({ where: { email } });
+      const user = await user.findOne({ where: { email } });
       if (user) {
         return res.status(400).json({ message: "User already exists" });
       }
@@ -30,7 +30,7 @@ router.post(
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
 
-      const newUser = await User.create({
+      const newUser = await user.create({
         email,
         password: hashedPassword,
         role: "customer",
@@ -59,7 +59,7 @@ router.post(
 
     const { email, password } = req.body;
     try {
-      const user = await User.findOne({ where: { email } });
+      const user = await user.findOne({ where: { email } });
       if (!user) {
         return res.status(400).json({ message: "Invalid email or password" });
       }
