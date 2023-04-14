@@ -1,9 +1,7 @@
-const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: "postgres",
-});
+const { sequelize, DataTypes } = require("sequelize");
+const sequelize = require("../db.config");
 
-const Order = sequelize.define("Order", {
+const Order = sequelize.define("order", {
   orderId: {
     type: DataTypes.INTEGER,
     primaryKey: true,

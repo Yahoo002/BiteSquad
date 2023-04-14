@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config.json");
+const { sequelize, DataTypes } = require("sequelize");
+const sequelize = require("../db.config");
 
-const DeliveryPartner = sequelize.define("DeliveryPartner", {
-  id: {
+const DeliveryPartner = sequelize.define("deliveryPartner", {
+  deliveryPartnerId: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     allowNull: false,
