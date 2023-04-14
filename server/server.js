@@ -4,6 +4,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const { sequelize } = require("./models");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;

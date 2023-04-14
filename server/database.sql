@@ -1,12 +1,12 @@
 CREATE DATABASE bitesquad;
 
-CREATE TABLE users(id SERIAL PRIMARY KEY, name VARCHAR(255), email VARCHAR(255) UNIQUE, password VARCHAR(255), role VARCHAR(255));
+CREATE TABLE users(userId SERIAL PRIMARY KEY, userName VARCHAR(255), mobileNumber VARCHAR(255) UNIQUE, password VARCHAR(255), role VARCHAR(255));
 
-CREATE TABLE restaurants(id SERIAL PRIMARY KEY, name VARCHAR(255), address VARCHAR(255), description TEXT, rating FLOAT, admin_id INTEGER REFERENCES users(id));
+CREATE TABLE restaurants(restaurantId SERIAL PRIMARY KEY, restaurantName VARCHAR(255), rating FLOAT, openingTime TIME, closingTime TIME, adminId INTEGER REFERENCES users(userId));
 
-CREATE TABLE menus(id SERIAL PRIMARY KEY, name VARCHAR(255), description TEXT, price FLOAT, image VARCHAR(255), restaurant_id INTEGER REFERENCES restaurants(id));
+CREATE TABLE menu(menuId SERIAL PRIMARY KEY, name VARCHAR(255), description VARCHAR(255), price FLOAT, image VARCHAR(255), restaurant_id INTEGER REFERENCES restaurants(restaurantId));
 
-CREATE TABLE orders(id SERIAL PRIMARY KEY, customer_id INTEGER REFERENCES users(id), restaurant_id INTEGER REFERENCES restaurants(id), menu_id INTEGER REFERENCES menus(id), status VARCHAR(255), payment_id VARCHAR(255), amount FLOAT);
+CREATE TABLE order(orderId SERIAL PRIMARY KEY, userId INTEGER REFERENCES users(userId), restaurant_id INTEGER REFERENCES restaurants(restaurantId), menu_id INTEGER REFERENCES menus(menuId), status VARCHAR(255), paymentId INTEGER, totalPrice FLOAT);
 
 CREATE TABLE delivery_partners(id SERIAL PRIMARY KEY, name VARCHAR(255), email VARCHAR(255) UNIQUE, password VARCHAR(255), phone VARCHAR(255), address VARCHAR(255), restaurant_id INTEGER REFERENCES restaurants(id));
 
