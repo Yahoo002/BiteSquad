@@ -3,13 +3,19 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const sequelize = require("sequelize");
+const Sequelize = require("sequelize");
 // const { sequelize } = require("./models");
 const dotenv = require("dotenv");
 dotenv.config();
+const dbConfig = require("./db.config");
+
+const sequelize = new Sequelize("bitesquad", "yahya", "", {
+  host: "localhost",
+  dialect: "postgres",
+});
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 // Middleware
 app.use(bodyParser.json());
@@ -31,12 +37,10 @@ app.use("/api/analytics", analyticsRoutes);
 
 // Start the server
 sequelize
-  .sync({ force: false })
+  .authenticate()
   .then(() => {
-    app.listen(port, () => {
-      console.log(`Server running on port ${port}`);
-    });
+    console.log("Connection has been established successfully.");
   })
   .catch((error) => {
-    console.error("Error starting server: ", error);
+    console.error("Unable to connect to the database: ", error);
   });

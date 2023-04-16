@@ -1,5 +1,17 @@
-const { sequelize, DataTypes } = require("sequelize");
-const sequelize = require("../db.config");
+const { Sequelize, DataTypes } = require("sequelize");
+const sequelize = new Sequelize("bitesquad", "yahya", "", {
+  host: "localhost",
+  dialect: "postgres",
+});
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection has been established successfully.");
+  })
+  .catch((error) => {
+    console.error("Unable to connect to the database: ", error);
+  });
 
 const DeliveryPartner = sequelize.define("deliveryPartner", {
   deliveryPartnerId: {
@@ -26,5 +38,14 @@ const DeliveryPartner = sequelize.define("deliveryPartner", {
     defaultValue: true,
   },
 });
+
+sequelize
+  .sync()
+  .then(() => {
+    console.log("Book table created successfully!");
+  })
+  .catch((error) => {
+    console.error("Unable to create table : ", error);
+  });
 
 module.exports = DeliveryPartner;

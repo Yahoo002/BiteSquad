@@ -1,10 +1,21 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const bcrypt = require("bcrypt");
 
-const sequelize = require("../db.config");
+const sequelize = new Sequelize("bitesquad", "yahya", "", {
+  host: "localhost",
+  dialect: "postgres",
+});
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection has been established successfully.");
+  })
+  .catch((error) => {
+    console.error("Unable to connect to the database: ", error);
+  });
 
 const User = sequelize.define("user", {
-  id: {
+  userId: {
     type: DataTypes.UUID,
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true,
@@ -38,5 +49,14 @@ User.prototype.isValidPassword = async function (password) {
   const compare = await bcrypt.compare(password, user.password);
   return compare;
 };
+
+sequelize
+  .sync()
+  .then(() => {
+    console.log("Book table created successfully!");
+  })
+  .catch((error) => {
+    console.error("Unable to create table : ", error);
+  });
 
 module.exports = User;

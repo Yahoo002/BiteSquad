@@ -1,9 +1,9 @@
-const Order = require("../models/Order");
-const User = require("../models/User");
-const Restaurant = require("../models/Restaurant");
+const Order = require("../models/order");
+const User = require("../models/users");
+const Restaurant = require("../models/restaurant");
 
 // Returns the user who has placed the most orders
-exports.getMostActiveUserForRestaurant = async (req, res, next) => {
+const getMostActiveUserForRestaurant = async (req, res, next) => {
   const { restaurantId } = req.params;
   const n = req.query.n || 1; // default to returning the top 1 user
 

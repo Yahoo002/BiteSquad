@@ -1,6 +1,6 @@
-const DeliveryDetail = require("../models/DeliveryDetail");
-const DeliveryPartner = require("../models/DeliveryPartner");
-const Order = require("../models/Order");
+// const DeliveryDetail = require("../models/DeliveryDetail");
+const DeliveryPartner = require("../models/deliveryPartner");
+const Order = require("../models/order");
 
 // Function to create a new delivery partner
 const createDeliveryPartner = async (req, res) => {
@@ -76,34 +76,34 @@ const deleteDeliveryPartnerById = async (req, res) => {
 };
 
 // Function to assign a delivery partner to an order
-const assignDeliveryPartner = async (req, res) => {
-  try {
-    const order = await Order.findById(req.params.orderId);
-    if (!order) {
-      res.status(404).json({ message: "Order not found" });
-      return;
-    }
+// const assignDeliveryPartner = async (req, res) => {
+//   try {
+//     const order = await Order.findById(req.params.orderId);
+//     if (!order) {
+//       res.status(404).json({ message: "Order not found" });
+//       return;
+//     }
 
-    const deliveryPartner = await DeliveryPartner.findById(
-      req.params.deliveryPartnerId
-    );
-    if (!deliveryPartner) {
-      res.status(404).json({ message: "Delivery partner not found" });
-      return;
-    }
+//     const deliveryPartner = await DeliveryPartner.findById(
+//       req.params.deliveryPartnerId
+//     );
+//     if (!deliveryPartner) {
+//       res.status(404).json({ message: "Delivery partner not found" });
+//       return;
+//     }
 
-    const deliveryDetail = await DeliveryDetail.create({
-      order: order._id,
-      deliveryPartner: deliveryPartner._id,
-      assignedAt: new Date(),
-    });
+//     const deliveryDetail = await DeliveryDetail.create({
+//       order: order._id,
+//       deliveryPartner: deliveryPartner._id,
+//       assignedAt: new Date(),
+//     });
 
-    res.status(200).json(deliveryDetail);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error assigning delivery partner" });
-  }
-};
+//     res.status(200).json(deliveryDetail);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Error assigning delivery partner" });
+//   }
+// };
 
 module.exports = {
   createDeliveryPartner,
@@ -111,5 +111,4 @@ module.exports = {
   getDeliveryPartnerById,
   updateDeliveryPartnerById,
   deleteDeliveryPartnerById,
-  assignDeliveryPartner,
 };
