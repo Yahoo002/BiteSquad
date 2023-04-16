@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { Restaurant, Menu, User } = require("../models");
-const { verifyToken, verifyRestaurantAdmin } = require("../middleware/auth");
+const { Restaurant } = require("../models/restaurant");
+const { Menu } = require("../models/menu");
+const {
+  verifyToken,
+  verifyRestaurantAdmin,
+} = require("../middlewares/authMiddleware");
 
 // Get all restaurants
 router.get("/restaurant", async (req, res) => {

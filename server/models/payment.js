@@ -1,4 +1,5 @@
 const { Sequelize, DataTypes } = require("sequelize");
+// const Order = require("./order");
 const sequelize = new Sequelize("bitesquad", "yahya", "", {
   host: "localhost",
   dialect: "postgres",
@@ -12,30 +13,31 @@ sequelize
     console.error("Unable to connect to the database: ", error);
   });
 
-const Menu = sequelize.define("menu", {
-  menuId: {
+const Payment = sequelize.define("Payment", {
+  paymentId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
     primaryKey: true,
     autoIncrement: true,
-  },
-  name: {
-    type: DataTypes.STRING(255),
     allowNull: false,
   },
-  description: {
-    type: DataTypes.STRING(255),
+  orderId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: "order",
+      key: "orderId",
+    },
+  },
+  paymentMethod: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
-  price: {
+  paymentAmount: {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
-  image: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-  },
 });
+
+// Payment.belongsTo(Order, { foreignKey: "orderId" });
 
 sequelize
   .sync()
@@ -46,4 +48,4 @@ sequelize
     console.error("Unable to create table : ", error);
   });
 
-module.exports = Menu;
+module.exports = { Payment };
