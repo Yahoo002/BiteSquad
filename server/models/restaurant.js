@@ -53,7 +53,7 @@ const Restaurant = sequelize.define("restaurant", {
 sequelize
   .sync()
   .then(() => {
-    console.log("Book table created successfully!");
+    console.log("Restaurant table created successfully!");
   })
   .catch((error) => {
     console.error("Unable to create table : ", error);

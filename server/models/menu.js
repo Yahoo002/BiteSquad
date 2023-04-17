@@ -40,7 +40,7 @@ const Menu = sequelize.define("menu", {
 sequelize
   .sync()
   .then(() => {
-    console.log("Book table created successfully!");
+    console.log("Menu table created successfully!");
   })
   .catch((error) => {
     console.error("Unable to create table : ", error);
