@@ -35,6 +35,7 @@ const User = sequelize.define("users", {
   },
   role: {
     type: DataTypes.ENUM("customer", "restaurant", "admin", "deliveryPartner"),
+    defaultValue: "customer",
     allowNull: false,
   },
 });
@@ -53,7 +54,7 @@ User.prototype.isValidPassword = async function (password) {
 sequelize
   .sync()
   .then(() => {
-    console.log("Book table created successfully!");
+    console.log("User table created successfully!");
   })
   .catch((error) => {
     console.error("Unable to create table : ", error);

@@ -15,15 +15,24 @@ const sequelize = new Sequelize("bitesquad", "yahya", "", {
 });
 
 const app = express();
-const port = process.env.PORT || 8080;
 
-// Middleware
-app.use(bodyParser.json());
-app.use(cors());
+// app.get("/", function (req, res) {
+//   res.send("<h1>Hello World!</h1>");
+// });
+
+// // Middleware
+app.use(express.json());
+app.use(
+  cors({
+    origin: ["http://localhost:3002"],
+    method: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 app.use(helmet());
 app.use(morgan("combined"));
 
-//Routes
+// //Routes
 const authRoutes = require("./routes/auth");
 const restaurantRoutes = require("./routes/restaurant");
 const orderRoutes = require("./routes/order");
@@ -33,7 +42,11 @@ app.use("/api/auth", authRoutes);
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/deliveries", deliveryRoutes);
-app.use("/api/analytics", analyticsRoutes);
+// app.use("/api/analytics", analyticsRoutes);
+
+app.listen(3000, function () {
+  console.log("Server started on port 3000");
+});
 
 // Start the server
 sequelize
