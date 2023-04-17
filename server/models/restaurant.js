@@ -44,7 +44,7 @@ const Restaurant = sequelize.define("restaurant", {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: "user",
+      model: "users",
       key: "userId",
     },
   },

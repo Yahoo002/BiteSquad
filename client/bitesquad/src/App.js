@@ -16,6 +16,7 @@ const App = () => {
   const [categories, setCategories] = useState(allCategories);
   const [pageId, setPageId] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [cartItems, setCartItems] = useState([]);
 
   const filterItems = (category) => {
     setActiveCategory(category);
@@ -37,6 +38,12 @@ const App = () => {
     );
     setMenuItems(filteredItems);
   }, [searchTerm]);
+  function clearCart() {
+    setCartItems([]);
+  }
+  function addToCart(item) {
+    setCartItems([...cartItems, item]);
+  }
 
   return (
     <main>
@@ -54,12 +61,21 @@ const App = () => {
             value={searchTerm}
             onChange={handleSearch}
           />
+          <p>
+            {" "}
+            <button onClick={clearCart}>Clear Cart</button>
+          </p>
           <Categories
             categories={categories}
             activeCategory={activeCategory}
             filterItems={filterItems}
           />
-          <Menu items={menuItems} />
+          <Menu
+            items={menuItems}
+            addToCart={(item) => {
+              addToCart(item);
+            }}
+          />
         </section>
       ) : pageId === 1 ? (
         <section className="login section">
@@ -71,7 +87,7 @@ const App = () => {
         </section>
       ) : (
         <section className="Cart section">
-          <Cart />
+          <Cart items={cartItems} />
         </section>
       )}
     </main>

@@ -14,7 +14,7 @@ sequelize
     console.error("Unable to connect to the database: ", error);
   });
 
-const User = sequelize.define("user", {
+const User = sequelize.define("users", {
   userId: {
     type: DataTypes.UUID,
     defaultValue: Sequelize.UUIDV4,

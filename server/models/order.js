@@ -26,10 +26,10 @@ const Order = sequelize.define("order", {
     autoIncrement: true,
   },
   userId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: "user",
+      model: "users",
       key: "userId",
     },
   },
